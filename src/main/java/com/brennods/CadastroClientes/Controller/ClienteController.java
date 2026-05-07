@@ -39,6 +39,16 @@ public class ClienteController {
     public ResponseEntity<List<ClientResponseDTO>> listAll(){
         return ResponseEntity.ok(clientesService.findAll());
     }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<ClientResponseDTO> findById(@PathVariable Long id){
+        return ResponseEntity.ok(clientesService.findClienteById(id));
+    }
+
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<ClientResponseDTO> findByNome(@PathVariable String nome){
+        return ResponseEntity.ok(clientesService.findClienteByNome(nome));
+    }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

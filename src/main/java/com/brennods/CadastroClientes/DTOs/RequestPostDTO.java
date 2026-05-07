@@ -12,9 +12,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RequestPostDTO {
-    @NotBlank
+    @NotBlank(message = "O nome do cliente é obrigatório")
     private String nome;
-    @NotBlank
+    @NotBlank(message = "O email do cliente é obrigatório")
     @Email
     private String email;
 }

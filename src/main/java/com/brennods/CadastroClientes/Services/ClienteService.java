@@ -8,7 +8,8 @@ import com.brennods.CadastroClientes.DTOs.ClientResponseDTO;
 import com.brennods.CadastroClientes.DTOs.RequestPostDTO;
 import com.brennods.CadastroClientes.DTOs.RequestPutDTO;
 import com.brennods.CadastroClientes.Entity.Cliente;
-import com.brennods.CadastroClientes.Exception.ClienteNotFoundException;
+import com.brennods.CadastroClientes.Exception.ClienteNotFoundByIdException;
+import com.brennods.CadastroClientes.Exception.ClienteNotFoundByNomeException;
 import com.brennods.CadastroClientes.Repository.ClienteRepository;
 
 @Service
@@ -34,12 +35,22 @@ public class ClienteService {
         clienteRepository.deleteById(id);
     }
 
-    public Cliente findClienteById(Long id){
-        return clienteRepository.findById(id).orElseThrow( () -> new ClienteNotFoundException(id));
+    public ClientResponseDTO findClienteById(Long id){
+        return ClientResponseDTO.toDTO(clienteRepository.findById(id).orElseThrow( () -> new ClienteNotFoundByIdException(id)));
+    }
+    public ClientResponseDTO findClienteByNome(String nome){
+        return ClientResponseDTO.toDTO(clienteRepository.findByNome(nome).orElseThrow(() -> new ClienteNotFoundByNomeException(nome)));
     }
 
     public ClientResponseDTO updateCliente(Long id, RequestPutDTO clienteNovo){
-        Cliente clienteAntigo = findClienteById(id);
+        ClientResponseDTO clienteRecebido = findClienteById(id);
+        
+        Cliente clienteAntigo = Cliente.builder()
+        .id(clienteRecebido.id())
+        .nome(clienteRecebido.nome())
+        .email(clienteRecebido.email())
+        .build();
+
         Cliente clienteAtualizado = Cliente.builder()
             .id(clienteAntigo.getId())
             .nome(clienteNovo.getNome() == null ? clienteAntigo.getNome() : clienteNovo.getNome())

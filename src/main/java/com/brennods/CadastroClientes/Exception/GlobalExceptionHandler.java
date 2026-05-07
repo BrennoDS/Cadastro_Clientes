@@ -11,9 +11,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     
-    @ExceptionHandler(ClienteNotFoundException.class)
+    @ExceptionHandler(ClienteNotFoundByIdException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Map<String, String> handleNotFound(ClienteNotFoundException ex) {
+    public Map<String, String> handleNotFoundById(ClienteNotFoundByIdException ex) {
+        return Map.of("error", ex.getMessage());
+    }
+
+    @ExceptionHandler(ClienteNotFoundByNomeException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> handlerNotFoundByName(ClienteNotFoundByNomeException ex){
         return Map.of("error", ex.getMessage());
     }
 
