@@ -8,6 +8,7 @@ import com.brennods.CadastroClientes.DTOs.ClientResponseDTO;
 import com.brennods.CadastroClientes.DTOs.RequestPostDTO;
 import com.brennods.CadastroClientes.DTOs.RequestPutDTO;
 import com.brennods.CadastroClientes.Entity.Cliente;
+import com.brennods.CadastroClientes.Exception.ClienteAlreadyExists;
 import com.brennods.CadastroClientes.Exception.ClienteNotFoundByIdException;
 import com.brennods.CadastroClientes.Exception.ClienteNotFoundByNomeException;
 import com.brennods.CadastroClientes.Repository.ClienteRepository;
@@ -22,12 +23,17 @@ public class ClienteService {
     }
 
     public ClientResponseDTO createClient(RequestPostDTO clienteNovo) {
+        if(clienteRepository.existsByEmail(clienteNovo.getEmail())){
+            throw new ClienteAlreadyExists(clienteNovo.getEmail());
+        }
+
+
         Cliente cliente = Cliente.builder()
         .nome(clienteNovo.getNome())
         .email(clienteNovo.getEmail())
         .build();
-        clienteRepository.save(cliente);
-        return ClientResponseDTO.toDTO(cliente);
+        Cliente clienteSalvo = clienteRepository.save(cliente);
+        return ClientResponseDTO.toDTO(clienteSalvo);
     }
 
     public void deleteClient(Long id) {

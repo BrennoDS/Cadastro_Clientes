@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.brennods.CadastroClientes.DTOs.ClientResponseDTO;
 import com.brennods.CadastroClientes.DTOs.RequestPostDTO;
 import com.brennods.CadastroClientes.DTOs.RequestPutDTO;
-import com.brennods.CadastroClientes.Entity.Cliente;
 import com.brennods.CadastroClientes.Services.ClienteService;
 
 import jakarta.validation.Valid;

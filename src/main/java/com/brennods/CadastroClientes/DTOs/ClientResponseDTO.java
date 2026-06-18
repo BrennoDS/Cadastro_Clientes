@@ -2,6 +2,8 @@ package com.brennods.CadastroClientes.DTOs;
 
 import com.brennods.CadastroClientes.Entity.Cliente;
 
+
+
 public record ClientResponseDTO(
         Long id,
         String nome,
@@ -14,4 +16,6 @@ public record ClientResponseDTO(
                 cliente.getEmail()
         );
     }   
+
+
 }

@@ -23,4 +23,10 @@ public class GlobalExceptionHandler {
         return Map.of("error", ex.getMessage());
     }
 
+    @ExceptionHandler(ClienteAlreadyExists.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_CONTENT)
+    public Map<String, String> handlerClienteAlreadExists(ClienteAlreadyExists ex){
+        return Map.of("error", ex.getMessage());
+    }
+
 }

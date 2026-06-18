@@ -1,5 +1,6 @@
 package com.brennods.CadastroClientes.Entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,5 +32,6 @@ public class Cliente {
     String nome;
 
     @NotBlank(message = "O email do cliente é obrigatório")
+    @Column(unique = true, nullable = false)
     String email;
 }
